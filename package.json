@@ -1,0 +1,26 @@
+{
+  "name": "node-mosquitto-dynsec",
+  "version": "0.0.1",
+  "description": "Node.JS Library for the Mosquitto Dynamic Security Plugin.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jonasclaes/node-mosquitto-dynsec.git"
+  },
+  "keywords": [
+    "mosquitto",
+    "dynsec",
+    "dynamic",
+    "security",
+    "mqtt"
+  ],
+  "author": "Jonas Claes <jonas+packages@jonasclaes.be>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jonasclaes/node-mosquitto-dynsec/issues"
+  },
+  "homepage": "https://github.com/jonasclaes/node-mosquitto-dynsec#readme"
+}
