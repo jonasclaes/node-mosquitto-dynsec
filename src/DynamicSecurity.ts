@@ -8,6 +8,7 @@ import {
     ICommandResponse,
     ICreateClientRequest,
     ICreateGroupRequest,
+    ICreateRoleRequest,
     IDefaultACLAccess,
     IDefaultACLAccessResponse,
     IDeleteClientRequest,
@@ -400,11 +401,23 @@ export class MosquittoDynSec {
     // Roles
     //
 
-    // TODO: createRole
+    /**
+     * Create a role.
+     * @param {ICreateRoleRequest} createRoleRequest
+     * @returns {void}
+     */
+    public async createRole(createRoleRequest: ICreateRoleRequest): Promise<void> {
+        return await (this.sendCmd(SendCommand.createRole, createRoleRequest) as Promise<void>);
+    }
 
-
-    // TODO: deleteRole
-    
+    /**
+     * Delete a role.
+     * @param {string} rolename
+     * @returns {void}
+     */
+    public async deleteRole(rolename: string): Promise<void> {
+        return await (this.sendCmd(SendCommand.deleteRole, { rolename }) as Promise<void>);
+    }    
     
     // TODO: addRoleACL
     
