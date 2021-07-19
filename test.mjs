@@ -54,6 +54,10 @@ async function run() {
 
     // await dynsec.deleteGroup("testgrp");
 
+    // console.log(await dynsec.getGroup("testgrp"));
+
+    console.log(await dynsec.listGroups({ verbose: true }));
+
     // await dynsec.deleteClient({ username: "Jonas" });
 
     dynsec.disconnect();

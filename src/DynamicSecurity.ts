@@ -12,8 +12,11 @@ import {
     IDefaultACLAccessResponse,
     IDeleteClientRequest,
     IGetClientResponse,
+    IGetGroupResponse,
     IListClientsRequest,
     IListClientsResponse,
+    IListGroupsRequest,
+    IListGroupsResponse,
     IPendingCommand,
     IRemoveClientRoleRequest,
     IRemoveGroupClientRequest,
@@ -375,12 +378,23 @@ export class MosquittoDynSec {
         return await (this.sendCmd(SendCommand.removeGroupClient, removeGroupClientRequest) as Promise<void>);
     }
 
-    // TODO: getGroup
+    /**
+     * Get a group.
+     * @param {string} groupname
+     * @returns {IGetGroupResponse}
+     */
+    public async getGroup(groupname: string): Promise<IGetGroupResponse> {
+        return await (this.sendCmd(SendCommand.getGroup, { groupname }) as Promise<IGetGroupResponse>);
+    }
 
-
-    // TODO: listGroups
-
-
+    /**
+     * List groups.
+     * @param {IListGroupsRequest} listGroupsRequest 
+     * @returns {IListGroupsResponse}
+     */
+    public async listGroups(listGroupsRequest: IListGroupsRequest): Promise<IListGroupsResponse> {
+        return await (this.sendCmd(SendCommand.listGroups, listGroupsRequest) as Promise<IListGroupsResponse>);
+    }
 
     //
     // Roles
