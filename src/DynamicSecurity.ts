@@ -1,6 +1,6 @@
 import { AclType, DefaultAclType } from "MosquittoDynSec";
 import { MqttClient, IClientOptions, connect } from "mqtt";
-import { ICommandPayload, IResponseTopicPayload } from "./interfaces";
+import { ICommandPayload, IDefaultACLAccess, IResponseTopicPayload } from "./interfaces";
 
 enum SendCommand {
     "getDefaultACLAccess" = "getDefaultACLAccess",
@@ -79,7 +79,27 @@ export class MosquittoDynSec {
         });
     }
 
-    protected sendCommand(commandName: string, commandParams: object = {}): void {
+    /**
+     * Disconnect from MQTT server.
+     * @returns 
+     */
+    public async disconnect(): Promise<void> {
+        return new Promise((resolve, reject) => {
+            if (!this.mqttClient) return resolve();
+            this.mqttClient.end(true, {}, (error?: Error) => {
+                if (!error) resolve();
+                reject();
+            });
+        });
+    }
+
+    /**
+     * Send a command to the MQTT server.
+     * @param commandName 
+     * @param commandParams 
+     * @returns 
+     */
+    protected sendCmd(commandName: string, commandParams: object = {}): void {
         // Check if client is connected.
         if (!this.mqttClient)
             throw new Error("Can't send command: not connected yet.");
@@ -92,13 +112,41 @@ export class MosquittoDynSec {
         return;
     }
 
+    /**
+     * Handle a command response from the MQTT server.
+     * @param topic 
+     * @param payload 
+     */
     protected onCommandResponse(topic: string, payload: IResponseTopicPayload): void {
         console.info(JSON.stringify(payload, null, 4));
     }
 
     // General
-    public async getDefaultACLAccess(aclType: DefaultAclType) {
-        this.sendCommand(SendCommand.getDefaultACLAccess, { aclType });
+    /**
+     * Get default ACL access.
+     * @returns 
+     */
+    public async getDefaultACLAccess() {
+        this.sendCmd(SendCommand.getDefaultACLAccess);
+        return;
+    }
+
+    /**
+     * Set default ACL(s) access.
+     * @param acls ACLs
+     * @returns 
+     */
+    public async setDefaultACLAccess(acls: IDefaultACLAccess[]) {
+        this.sendCmd(SendCommand.setDefaultACLAccess, { acls });
+        return;
+    }
+
+    /**
+     * Get default anonymous group.
+     * @returns 
+     */
+    public async getAnonymousGroup() {
+        this.sendCmd(SendCommand.getAnonymousGroup);
         return;
     }
 
