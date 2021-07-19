@@ -15,10 +15,10 @@ async function run() {
     // console.log(await dynsec.getDefaultACLAccess());
     // console.log(await dynsec.getAnonymousGroup());
 
-    await dynsec.createClient({
-        username: "Jonas",
-        password: "test123"
-    });
+    // await dynsec.createClient({
+    //     username: "Jonas",
+    //     password: "test123"
+    // });
 
     await dynsec.setClientPassword({
         username: "Jonas",

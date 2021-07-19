@@ -53,6 +53,7 @@ export class MosquittoDynSec {
     // Class instance variables.
     private mqttClient?: MqttClient;
     private commandQueue: {[commandName: string]: IPendingCommand} = {};
+    private timerQueue: {[commandName: string]: NodeJS.Timeout} = {};
 
     /**
      * Node.JS Mosquitto Dynamic Security Plugin constructor.
@@ -131,7 +132,10 @@ export class MosquittoDynSec {
         this.mqttClient.publish(MosquittoDynSec.MGMT_TOPIC, payload);
 
         const timeoutPromise = new Promise<object>((resolve, reject) => {
-            setTimeout(() => reject("COMMAND_TIMEOUT"), 1000 * MosquittoDynSec.TIMEOUT_SECONDS);
+            this.timerQueue[commandName] = setTimeout(() => {
+                delete this.timerQueue[commandName];
+                reject("COMMAND_TIMEOUT");
+            }, 1000 * MosquittoDynSec.TIMEOUT_SECONDS);
         });
 
         return Promise.race<Promise<object | void>>([commandPromise, timeoutPromise]);
@@ -143,16 +147,25 @@ export class MosquittoDynSec {
      * @param payload 
      */
      protected onCommandResponse(topic: string, payload: IResponseTopicPayload): void {
+        if (process.env.DEBUG) {
+            console.debug("Received payload:");
+            console.debug(payload);
+        }
+
         if (!Array.isArray(payload.responses))
             throw new Error("Invalid command response payload.");
 
         payload.responses.forEach((res: ICommandResponse) => {
             const queuedCommand = this.commandQueue[res.command];
+            const queuedTimer = this.timerQueue[res.command];
 
             if (!queuedCommand)
                 return console.warn(`Received response for unsent command '${res.command}'`, res.data)
 
+            clearTimeout(queuedTimer);
+
             delete this.commandQueue[res.command];
+            delete this.timerQueue[res.command];
             if (res.error) {
                 queuedCommand.reject(res.error);
             } else {
