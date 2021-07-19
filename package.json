@@ -2,8 +2,10 @@
   "name": "node-mosquitto-dynsec",
   "version": "0.0.1",
   "description": "Node.JS Library for the Mosquitto Dynamic Security Plugin.",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
+    "build": "tsc",
+    "dev": "tsc -w",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -22,5 +24,12 @@
   "bugs": {
     "url": "https://github.com/jonasclaes/node-mosquitto-dynsec/issues"
   },
-  "homepage": "https://github.com/jonasclaes/node-mosquitto-dynsec#readme"
+  "homepage": "https://github.com/jonasclaes/node-mosquitto-dynsec#readme",
+  "dependencies": {
+    "mqtt": "^4.2.8"
+  },
+  "devDependencies": {
+    "tsc-watch": "^4.4.0",
+    "typescript": "^4.3.5"
+  }
 }
