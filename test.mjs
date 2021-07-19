@@ -42,6 +42,8 @@ async function run() {
 
     // console.log(await dynsec.getClient("admin-user"));
 
+    // console.log(await dynsec.listClients());
+
     // await dynsec.deleteClient({ username: "Jonas" });
 
     dynsec.disconnect();

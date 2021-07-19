@@ -4,3 +4,4 @@ export { ISetClientPasswordRequest } from "./ISetClientPasswordRequest";
 export { ISetClientIdRequest } from "./ISetClientIdRequest";
 export { IAddClientRoleRequest } from "./IAddClientRoleRequest";
 export { IRemoveClientRoleRequest } from "./IRemoveClientRoleRequest";
+export { IListClientsRequest } from "./IListClientsRequest";

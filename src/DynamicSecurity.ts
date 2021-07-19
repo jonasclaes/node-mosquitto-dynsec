@@ -2,13 +2,15 @@ import { MqttClient, IClientOptions, connect } from "mqtt";
 import {
     IAddClientRoleRequest,
     IAnonymousGroupResponse,
-    IClientResponse,
     ICommandPayload,
     ICommandResponse,
     ICreateClientRequest,
     IDefaultACLAccess,
     IDefaultACLAccessResponse,
     IDeleteClientRequest,
+    IGetClientResponse,
+    IListClientsRequest,
+    IListClientsResponse,
     IPendingCommand,
     IRemoveClientRoleRequest,
     IResponseTopicPayload,
@@ -273,11 +275,19 @@ export class MosquittoDynSec {
      * @param {string} username
      * @returns {IClientResponse}
      */
-    public async getClient(username: string): Promise<IClientResponse> {
-        return await (this.sendCmd(SendCommand.getClient, { username }) as Promise<IClientResponse>);
+    public async getClient(username: string): Promise<IGetClientResponse> {
+        return await (this.sendCmd(SendCommand.getClient, { username }) as Promise<IGetClientResponse>);
     }
 
-    // TODO: listClients
+    /**
+     * List clients.
+     * @param {IListClientsRequest} listClientsRequest
+     * @returns {IListClientsResponse}
+     */
+    public async listClients(listClientsRequest: IListClientsRequest): Promise<IListClientsResponse> {
+        return await (this.sendCmd(SendCommand.listClients, listClientsRequest) as Promise<IListClientsResponse>);
+    }
+
     // TODO: enableClient
     // TODO: disableClient
 
