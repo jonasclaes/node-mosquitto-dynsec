@@ -288,8 +288,23 @@ export class MosquittoDynSec {
         return await (this.sendCmd(SendCommand.listClients, listClientsRequest) as Promise<IListClientsResponse>);
     }
 
-    // TODO: enableClient
-    // TODO: disableClient
+    /**
+     * Enable a client.
+     * @param {string} username
+     * @returns {void}
+     */
+    public async enableClient(username: string): Promise<void> {
+        return await (this.sendCmd(SendCommand.enableClient, { username }) as Promise<void>);
+    }
+
+    /**
+     * Disable a client.
+     * @param {string} username
+     * @returns {void}
+     */
+     public async disableClient(username: string): Promise<void> {
+        return await (this.sendCmd(SendCommand.disableClient, { username }) as Promise<void>);
+    }
 
     // Groups
 
