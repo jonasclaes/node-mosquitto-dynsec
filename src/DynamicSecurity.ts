@@ -2,6 +2,7 @@ import { MqttClient, IClientOptions, connect } from "mqtt";
 import {
     IAddClientRoleRequest,
     IAnonymousGroupResponse,
+    IClientResponse,
     ICommandPayload,
     ICommandResponse,
     ICreateClientRequest,
@@ -152,7 +153,7 @@ export class MosquittoDynSec {
      protected onCommandResponse(topic: string, payload: IResponseTopicPayload): void {
         if (process.env.DEBUG) {
             console.debug("Received payload:");
-            console.debug(payload);
+            console.debug(JSON.stringify(payload, null, 2));
         }
 
         if (!Array.isArray(payload.responses))
@@ -267,7 +268,15 @@ export class MosquittoDynSec {
         return await (this.sendCmd(SendCommand.removeClientRole, removeClientRoleRequest) as Promise<void>);
     }
 
-    // TODO: getClient
+    /**
+     * Get a client.
+     * @param {string} username
+     * @returns {IClientResponse}
+     */
+    public async getClient(username: string): Promise<IClientResponse> {
+        return await (this.sendCmd(SendCommand.getClient, { username }) as Promise<IClientResponse>);
+    }
+
     // TODO: listClients
     // TODO: enableClient
     // TODO: disableClient
