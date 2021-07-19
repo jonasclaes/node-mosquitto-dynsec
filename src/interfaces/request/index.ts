@@ -6,3 +6,5 @@ export { IAddClientRoleRequest } from "./IAddClientRoleRequest";
 export { IRemoveClientRoleRequest } from "./IRemoveClientRoleRequest";
 export { IListClientsRequest } from "./IListClientsRequest";
 export { ICreateGroupRequest } from "./ICreateGroupRequest";
+export { IAddGroupRoleRequest } from "./IAddGroupRoleRequest";
+export { IRemoveGroupRoleRequest } from "./IRemoveGroupRoleRequest";
