@@ -1,6 +1,7 @@
 import { MqttClient, IClientOptions, connect } from "mqtt";
 import {
     IAddClientRoleRequest,
+    IAddGroupClientRequest,
     IAddGroupRoleRequest,
     IAnonymousGroupResponse,
     ICommandPayload,
@@ -15,6 +16,7 @@ import {
     IListClientsResponse,
     IPendingCommand,
     IRemoveClientRoleRequest,
+    IRemoveGroupClientRequest,
     IRemoveGroupRoleRequest,
     IResponseTopicPayload,
     ISetClientIdRequest,
@@ -355,11 +357,23 @@ export class MosquittoDynSec {
         return await (this.sendCmd(SendCommand.removeGroupRole, removeGroupRoleRequest) as Promise<void>);
     }
 
-    // TODO: addGroupClient
+    /**
+     * Add a client to a group.
+     * @param {IAddGroupClientRequest} addGroupClientRequest
+     * @returns {void}
+     */
+    public async addGroupClient(addGroupClientRequest: IAddGroupClientRequest): Promise<void> {
+        return await (this.sendCmd(SendCommand.addGroupClient, addGroupClientRequest) as Promise<void>);
+    }
 
-
-    // TODO: removeGroupClient
-
+    /**
+     * Remove a client from a group.
+     * @param {IRemoveGroupClientRequest} removeGroupClientRequest
+     * @returns {void}
+     */
+    public async removeGroupClient(removeGroupClientRequest: IRemoveGroupClientRequest): Promise<void> {
+        return await (this.sendCmd(SendCommand.removeGroupClient, removeGroupClientRequest) as Promise<void>);
+    }
 
     // TODO: getGroup
 
