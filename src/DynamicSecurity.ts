@@ -1,5 +1,15 @@
 import { MqttClient, IClientOptions, connect } from "mqtt";
-import { IAnonymousGroupResponse, ICommandPayload, ICommandResponse, ICreateClientRequest, IDefaultACLAccess, IDefaultACLAccessResponse, IPendingCommand, IResponseTopicPayload } from "./interfaces";
+import {
+    IAnonymousGroupResponse,
+    ICommandPayload,
+    ICommandResponse,
+    ICreateClientRequest,
+    IDefaultACLAccess,
+    IDefaultACLAccessResponse,
+    IDeleteClientRequest,
+    IPendingCommand,
+    IResponseTopicPayload
+} from "./interfaces";
 
 enum SendCommand {
     "getDefaultACLAccess" = "getDefaultACLAccess",
@@ -153,7 +163,7 @@ export class MosquittoDynSec {
     // General
     /**
      * Get default ACL access.
-     * @returns 
+     * @returns {IDefaultACLAccessResponse}
      */
     public async getDefaultACLAccess(): Promise<IDefaultACLAccessResponse> {
         return await (this.sendCmd(SendCommand.getDefaultACLAccess) as Promise<IDefaultACLAccessResponse>);
@@ -161,8 +171,8 @@ export class MosquittoDynSec {
 
     /**
      * Set default ACL(s) access.
-     * @param acls ACLs
-     * @returns 
+     * @param {IDefaultACLAccess[]} acls ACLs
+     * @returns {void}
      */
     public async setDefaultACLAccess(acls: IDefaultACLAccess[]): Promise<void> {
         return await (this.sendCmd(SendCommand.setDefaultACLAccess, { acls }) as Promise<void>);
@@ -170,7 +180,7 @@ export class MosquittoDynSec {
 
     /**
      * Get anonymous group.
-     * @returns 
+     * @returns {IAnonymousGroupResponse}
      */
     public async getAnonymousGroup(): Promise<IAnonymousGroupResponse> {
         return await (this.sendCmd(SendCommand.getAnonymousGroup) as Promise<IAnonymousGroupResponse>);
@@ -178,16 +188,30 @@ export class MosquittoDynSec {
 
     /**
      * Set anonymous group.
-     * @param groupname Group name.
-     * @returns 
+     * @param {string} groupname Group name.
+     * @returns {void}
      */
     public async setAnonymousGroup(groupname: string): Promise<void> {
         return await (this.sendCmd(SendCommand.setAnonymousGroup, { groupname }) as Promise<void>);
     }
 
     // Clients
+    /**
+     * Create a client.
+     * @param {ICreateClientRequest} createClientRequest
+     * @returns {void}
+     */
     public async createClient(createClientRequest: ICreateClientRequest): Promise<void> {
         return await (this.sendCmd(SendCommand.createClient, createClientRequest) as Promise<void>);
+    }
+
+    /**
+     * Delete a client.
+     * @param {IDeleteClientRequest} deleteClientRequest
+     * @returns {void}
+     */
+    public async deleteClient(deleteClientRequest: IDeleteClientRequest): Promise<void> {
+        return await (this.sendCmd(SendCommand.deleteClient, deleteClientRequest) as Promise<void>);
     }
 
     // Groups
