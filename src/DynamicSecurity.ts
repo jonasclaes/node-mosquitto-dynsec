@@ -1,6 +1,5 @@
-import { AclType, DefaultAclType } from "MosquittoDynSec";
 import { MqttClient, IClientOptions, connect } from "mqtt";
-import { ICommandPayload, IDefaultACLAccess, IResponseTopicPayload } from "./interfaces";
+import { ICommandPayload, ICreateClientRequest, IDefaultACLAccess, IResponseTopicPayload } from "./interfaces";
 
 enum SendCommand {
     "getDefaultACLAccess" = "getDefaultACLAccess",
@@ -161,6 +160,10 @@ export class MosquittoDynSec {
     }
 
     // Clients
+    public async createClient(createClientRequest: ICreateClientRequest) {
+        this.sendCmd(SendCommand.createClient, createClientRequest);
+        return;
+    }
 
     // Groups
 
