@@ -9,6 +9,7 @@ import {
     IDefaultACLAccessResponse,
     IDeleteClientRequest,
     IPendingCommand,
+    IRemoveClientRoleRequest,
     IResponseTopicPayload,
     ISetClientIdRequest,
     ISetClientPasswordRequest
@@ -257,7 +258,15 @@ export class MosquittoDynSec {
         return await (this.sendCmd(SendCommand.addClientRole, addClientRoleRequest) as Promise<void>);
     }
 
-    // TODO: removeClientRole
+    /**
+     * Remove a role from a client.
+     * @param {IRemoveClientRoleRequest} removeClientRoleRequest
+     * @returns {void}
+     */
+    public async removeClientRole(removeClientRoleRequest: IRemoveClientRoleRequest): Promise<void> {
+        return await (this.sendCmd(SendCommand.removeClientRole, removeClientRoleRequest) as Promise<void>);
+    }
+
     // TODO: getClient
     // TODO: listClients
     // TODO: enableClient

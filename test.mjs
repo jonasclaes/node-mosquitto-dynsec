@@ -35,6 +35,11 @@ async function run() {
     //     rolename: "admin"
     // });
 
+    // await dynsec.removeClientRole({
+    //     username: "Jonas",
+    //     rolename: "admin"
+    // });
+
     // await dynsec.deleteClient({ username: "Jonas" });
 
     dynsec.disconnect();
