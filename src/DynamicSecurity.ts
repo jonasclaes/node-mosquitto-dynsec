@@ -142,11 +142,21 @@ export class MosquittoDynSec {
     }
 
     /**
-     * Get default anonymous group.
+     * Get anonymous group.
      * @returns 
      */
     public async getAnonymousGroup() {
         this.sendCmd(SendCommand.getAnonymousGroup);
+        return;
+    }
+
+    /**
+     * Set anonymous group.
+     * @param groupname Group name.
+     * @returns 
+     */
+    public async setAnonymousGroup(groupname: string) {
+        this.sendCmd(SendCommand.setAnonymousGroup, { groupname });
         return;
     }
 
