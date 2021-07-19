@@ -9,6 +9,7 @@ import {
     IDeleteClientRequest,
     IPendingCommand,
     IResponseTopicPayload,
+    ISetClientIdRequest,
     ISetClientPasswordRequest
 } from "./interfaces";
 
@@ -237,7 +238,15 @@ export class MosquittoDynSec {
         return await (this.sendCmd(SendCommand.setClientPassword, setClientPasswordRequest) as Promise<void>);
     }
 
-    // TODO: setClientId
+    /**
+     * Change the client id for a client.
+     * @param {ISetClientIdRequest} setClientIdRequest
+     * @returns {void}
+     */
+    public async setClientId(setClientIdRequest: ISetClientIdRequest): Promise<void> {
+        return await (this.sendCmd(SendCommand.setClientId, setClientIdRequest) as Promise<void>);
+    }
+
     // TODO: addClientRole
     // TODO: removeClientRole
     // TODO: getClient

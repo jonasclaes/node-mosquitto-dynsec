@@ -25,6 +25,11 @@ async function run() {
         password: "test"
     });
 
+    await dynsec.setClientId({
+        username: "Jonas",
+        clientid: "jonas1234"
+    });
+
     // await dynsec.deleteClient({ username: "Jonas" });
 
     dynsec.disconnect();
