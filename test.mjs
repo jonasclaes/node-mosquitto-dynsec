@@ -7,6 +7,8 @@ async function run() {
     });
 
     dynsec.getDefaultACLAccess("publishClientSend");
+
+    dynsec.disconnect();
 }
 
 run();
