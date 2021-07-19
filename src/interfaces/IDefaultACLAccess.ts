@@ -1,6 +1,6 @@
-import { DefaultAclType } from "MosquittoDynSec";
+import { EnumDefaultACLType } from "../enums";
 
 export interface IDefaultACLAccess {
-    acltype: DefaultAclType;
+    acltype: EnumDefaultACLType;
     allow: boolean;
 }

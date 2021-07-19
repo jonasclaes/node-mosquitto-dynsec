@@ -31,7 +31,7 @@ import {
     ISetClientIdRequest,
     ISetClientPasswordRequest
 } from "./interfaces";
-import { EnumAclType, EnumMQTTCmd } from "./enums";
+import { EnumMQTTCmd } from "./enums";
 
 export class MosquittoDynSec {
     // Constants.
