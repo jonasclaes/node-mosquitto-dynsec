@@ -1,5 +1,5 @@
 import { MqttClient, IClientOptions, connect } from "mqtt";
-import { ICommandPayload, ICommandResponse, ICreateClientRequest, IDefaultACLAccess, IPendingCommand, IResponseTopicPayload } from "./interfaces";
+import { IAnonymousGroupResponse, ICommandPayload, ICommandResponse, ICreateClientRequest, IDefaultACLAccess, IDefaultACLAccessResponse, IPendingCommand, IResponseTopicPayload } from "./interfaces";
 
 enum SendCommand {
     "getDefaultACLAccess" = "getDefaultACLAccess",
@@ -155,9 +155,8 @@ export class MosquittoDynSec {
      * Get default ACL access.
      * @returns 
      */
-    public async getDefaultACLAccess() {
-        const res = await (this.sendCmd(SendCommand.getDefaultACLAccess) as Promise<{ acls: object[] }>);
-        return res.acls;
+    public async getDefaultACLAccess(): Promise<IDefaultACLAccessResponse> {
+        return await (this.sendCmd(SendCommand.getDefaultACLAccess) as Promise<IDefaultACLAccessResponse>);
     }
 
     /**
@@ -165,7 +164,7 @@ export class MosquittoDynSec {
      * @param acls ACLs
      * @returns 
      */
-    public async setDefaultACLAccess(acls: IDefaultACLAccess[]) {
+    public async setDefaultACLAccess(acls: IDefaultACLAccess[]): Promise<void> {
         return await (this.sendCmd(SendCommand.setDefaultACLAccess, { acls }) as Promise<void>);
     }
 
@@ -173,9 +172,8 @@ export class MosquittoDynSec {
      * Get anonymous group.
      * @returns 
      */
-    public async getAnonymousGroup() {
-        const res = await (this.sendCmd(SendCommand.getAnonymousGroup) as Promise<{ group: object }>);
-        return res.group;
+    public async getAnonymousGroup(): Promise<IAnonymousGroupResponse> {
+        return await (this.sendCmd(SendCommand.getAnonymousGroup) as Promise<IAnonymousGroupResponse>);
     }
 
     /**
@@ -183,12 +181,12 @@ export class MosquittoDynSec {
      * @param groupname Group name.
      * @returns 
      */
-    public async setAnonymousGroup(groupname: string) {
+    public async setAnonymousGroup(groupname: string): Promise<void> {
         return await (this.sendCmd(SendCommand.setAnonymousGroup, { groupname }) as Promise<void>);
     }
 
     // Clients
-    public async createClient(createClientRequest: ICreateClientRequest) {
+    public async createClient(createClientRequest: ICreateClientRequest): Promise<void> {
         return await (this.sendCmd(SendCommand.createClient, createClientRequest) as Promise<void>);
     }
 

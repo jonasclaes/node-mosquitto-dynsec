@@ -3,4 +3,5 @@ export { ICommandResponse } from "./ICommandResponse";
 export { ICommandPayload } from "./ICommandPayload";
 export { IDefaultACLAccess } from "./IDefaultACLAccess";
 export { IPendingCommand } from "./IPendingCommand";
-export * from "./requests/index";
+export * from "./request/index";
+export * from "./response/index";
