@@ -1,5 +1,5 @@
 import { MqttClient, IClientOptions, connect } from "mqtt";
-import { ICommandPayload, ICreateClientRequest, IDefaultACLAccess, IResponseTopicPayload } from "./interfaces";
+import { ICommandPayload, ICommandResponse, ICreateClientRequest, IDefaultACLAccess, IPendingCommand, IResponseTopicPayload } from "./interfaces";
 
 enum SendCommand {
     "getDefaultACLAccess" = "getDefaultACLAccess",
@@ -34,12 +34,14 @@ enum SendCommand {
 
 export class MosquittoDynSec {
     // Constants.
-    private static API_VERSION = "v1";
+    private static readonly API_VERSION = "v1";
     private static readonly MGMT_TOPIC = `$CONTROL/dynamic-security/${MosquittoDynSec.API_VERSION}`;
     private static readonly RESPONSE_TOPIC = `${MosquittoDynSec.MGMT_TOPIC}/response`;
+    private static readonly TIMEOUT_SECONDS = 3;
 
     // Class instance variables.
     private mqttClient?: MqttClient;
+    private commandQueue: {[commandName: string]: IPendingCommand} = {};
 
     /**
      * Node.JS Mosquitto Dynamic Security Plugin constructor.
@@ -98,17 +100,30 @@ export class MosquittoDynSec {
      * @param commandParams 
      * @returns 
      */
-    protected sendCmd(commandName: string, commandParams: object = {}): void {
+    protected sendCmd(commandName: string, commandParams: object = {}): Promise<object | void> {
         // Check if client is connected.
         if (!this.mqttClient)
             throw new Error("Can't send command: not connected yet.");
+
+        // Check if command is already being executed.
+        if (this.commandQueue[commandName])
+            throw new Error("Can't send command: command is already in the queue.");
+
+        // Create a promise to which the commandhandler can respond.
+        const commandPromise = new Promise<object | void>((resolve, reject) => {
+            this.commandQueue[commandName] = {resolve, reject};
+        });
         
         // Execute command.
         const command: ICommandPayload = Object.assign({}, commandParams, { command: commandName });
         const payload = JSON.stringify({ commands: [command] });
         this.mqttClient.publish(MosquittoDynSec.MGMT_TOPIC, payload);
 
-        return;
+        const timeoutPromise = new Promise<object>((resolve, reject) => {
+            setTimeout(() => reject("COMMAND_TIMEOUT"), 1000 * MosquittoDynSec.TIMEOUT_SECONDS);
+        });
+
+        return Promise.race<Promise<object | void>>([commandPromise, timeoutPromise]);
     }
 
     /**
@@ -116,8 +131,23 @@ export class MosquittoDynSec {
      * @param topic 
      * @param payload 
      */
-    protected onCommandResponse(topic: string, payload: IResponseTopicPayload): void {
-        console.info(JSON.stringify(payload, null, 4));
+     protected onCommandResponse(topic: string, payload: IResponseTopicPayload): void {
+        if (!Array.isArray(payload.responses))
+            throw new Error("Invalid command response payload.");
+
+        payload.responses.forEach((res: ICommandResponse) => {
+            const queuedCommand = this.commandQueue[res.command];
+
+            if (!queuedCommand)
+                return console.warn(`Received response for unsent command '${res.command}'`, res.data)
+
+            delete this.commandQueue[res.command];
+            if (res.error) {
+                queuedCommand.reject(res.error);
+            } else {
+                queuedCommand.resolve(res.data);
+            }
+        });
     }
 
     // General
@@ -126,8 +156,8 @@ export class MosquittoDynSec {
      * @returns 
      */
     public async getDefaultACLAccess() {
-        this.sendCmd(SendCommand.getDefaultACLAccess);
-        return;
+        const res = await (this.sendCmd(SendCommand.getDefaultACLAccess) as Promise<{ acls: object[] }>);
+        return res.acls;
     }
 
     /**
@@ -136,8 +166,7 @@ export class MosquittoDynSec {
      * @returns 
      */
     public async setDefaultACLAccess(acls: IDefaultACLAccess[]) {
-        this.sendCmd(SendCommand.setDefaultACLAccess, { acls });
-        return;
+        return await (this.sendCmd(SendCommand.setDefaultACLAccess, { acls }) as Promise<void>);
     }
 
     /**
@@ -145,8 +174,8 @@ export class MosquittoDynSec {
      * @returns 
      */
     public async getAnonymousGroup() {
-        this.sendCmd(SendCommand.getAnonymousGroup);
-        return;
+        const res = await (this.sendCmd(SendCommand.getAnonymousGroup) as Promise<{ group: object }>);
+        return res.group;
     }
 
     /**
