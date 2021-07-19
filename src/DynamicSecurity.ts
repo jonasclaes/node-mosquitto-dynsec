@@ -5,6 +5,7 @@ import {
     ICommandPayload,
     ICommandResponse,
     ICreateClientRequest,
+    ICreateGroupRequest,
     IDefaultACLAccess,
     IDefaultACLAccessResponse,
     IDeleteClientRequest,
@@ -180,7 +181,10 @@ export class MosquittoDynSec {
         });
     }
 
+    //
     // General
+    //
+
     /**
      * Get default ACL access.
      * @returns {IDefaultACLAccessResponse}
@@ -215,7 +219,10 @@ export class MosquittoDynSec {
         return await (this.sendCmd(SendCommand.setAnonymousGroup, { groupname }) as Promise<void>);
     }
 
+    //
     // Clients
+    //
+
     /**
      * Create a client.
      * @param {ICreateClientRequest} createClientRequest
@@ -306,24 +313,67 @@ export class MosquittoDynSec {
         return await (this.sendCmd(SendCommand.disableClient, { username }) as Promise<void>);
     }
 
+    //
     // Groups
+    //
+    
+    /**
+     * Create a group.
+     * @param {ICreateGroupRequest} createGroupRequest
+     * @returns {void}
+     */
+    public async createGroup(createGroupRequest: ICreateGroupRequest): Promise<void> {
+        return await (this.sendCmd(SendCommand.createGroup, createGroupRequest) as Promise<void>);
+    }
 
-    // TODO: createGroup
-    // TODO: deleteGroup
+    /**
+     * Delete a group.
+     * @param {string} groupname
+     * @returns {void}
+     */
+     public async deleteGroup(groupname: string): Promise<void> {
+        return await (this.sendCmd(SendCommand.deleteGroup, { groupname }) as Promise<void>);
+    }
+
     // TODO: addGroupRole
+
+
     // TODO: removeGroupRole
+
+
     // TODO: addGroupClient
+
+
     // TODO: removeGroupClient
+
+
     // TODO: getGroup
+
+
     // TODO: listGroups
 
+
+
+    //
     // Roles
+    //
 
     // TODO: createRole
+
+
     // TODO: deleteRole
+    
+    
     // TODO: addRoleACL
+    
+    
     // TODO: removeRoleACL
+    
+    
     // TODO: getRole
+    
+    
     // TODO: listRoles
+
 
 }

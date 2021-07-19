@@ -48,6 +48,12 @@ async function run() {
 
     // await dynsec.disableClient("Jonas");
 
+    // await dynsec.createGroup({
+    //     groupname: "testgrp"
+    // });
+
+    // await dynsec.deleteGroup("testgrp");
+
     // await dynsec.deleteClient({ username: "Jonas" });
 
     dynsec.disconnect();
