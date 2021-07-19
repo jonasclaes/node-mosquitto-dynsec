@@ -20,15 +20,20 @@ async function run() {
     //     password: "test123"
     // });
 
-    await dynsec.setClientPassword({
-        username: "Jonas",
-        password: "test"
-    });
+    // await dynsec.setClientPassword({
+    //     username: "Jonas",
+    //     password: "test"
+    // });
 
-    await dynsec.setClientId({
-        username: "Jonas",
-        clientid: "jonas1234"
-    });
+    // await dynsec.setClientId({
+    //     username: "Jonas",
+    //     clientid: "jonas1234"
+    // });
+
+    // await dynsec.addClientRole({
+    //     username: "Jonas",
+    //     rolename: "admin"
+    // });
 
     // await dynsec.deleteClient({ username: "Jonas" });
 

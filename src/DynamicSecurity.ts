@@ -1,5 +1,6 @@
 import { MqttClient, IClientOptions, connect } from "mqtt";
 import {
+    IAddClientRoleRequest,
     IAnonymousGroupResponse,
     ICommandPayload,
     ICommandResponse,
@@ -247,7 +248,15 @@ export class MosquittoDynSec {
         return await (this.sendCmd(SendCommand.setClientId, setClientIdRequest) as Promise<void>);
     }
 
-    // TODO: addClientRole
+    /**
+     * Add a role to a client.
+     * @param {IAddClientRoleRequest} addClientRoleRequest
+     * @returns {void}
+     */
+    public async addClientRole(addClientRoleRequest: IAddClientRoleRequest): Promise<void> {
+        return await (this.sendCmd(SendCommand.addClientRole, addClientRoleRequest) as Promise<void>);
+    }
+
     // TODO: removeClientRole
     // TODO: getClient
     // TODO: listClients
