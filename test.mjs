@@ -62,21 +62,34 @@ async function run() {
 
     // await dynsec.deleteClient({ username: "Jonas" });
 
-    await dynsec.deleteRole("testrole");
+    // await dynsec.deleteRole("testrole");
 
-    await dynsec.createRole({
-        rolename: "testrole",
-        acls: [{
-            acltype: EnumAclType.PUBLISH_CLIENT_SEND,
-            topic: "/",
-            allow: true
-        }, {
-            acltype: EnumAclType.PUBLISH_CLIENT_RECEIVE,
-            topic: "/",
-            allow: true
-        }]
-    })
+    // await dynsec.createRole({
+    //     rolename: "testrole",
+    //     acls: [{
+    //         acltype: EnumAclType.PUBLISH_CLIENT_SEND,
+    //         topic: "/",
+    //         allow: true
+    //     }, {
+    //         acltype: EnumAclType.PUBLISH_CLIENT_RECEIVE,
+    //         topic: "/",
+    //         allow: true
+    //     }]
+    // });
 
+    // await dynsec.addRoleACL({
+    //     rolename: "testrole",
+    //     acltype: EnumAclType.PUBLISH_CLIENT_SEND,
+    //     topic: "test/v1",
+    //     allow: true
+    // });
+
+    // await dynsec.removeRoleACL({
+    //     rolename: "testrole",
+    //     acltype: EnumAclType.PUBLISH_CLIENT_SEND,
+    //     topic: "test/v1"
+    // });
+    
     dynsec.disconnect();
 }
 

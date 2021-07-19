@@ -1,4 +1,4 @@
-import { EnumAclType } from "../../enums/EnumAclType";
+import { EnumAclType } from "../../enums";
 
 export interface ICreateRoleRequest {
     rolename: string;
@@ -8,6 +8,6 @@ export interface ICreateRoleRequest {
         acltype: EnumAclType;
         topic: string;
         priority?: number;
-        allow: boolean
+        allow?: boolean;
     }]
 }
