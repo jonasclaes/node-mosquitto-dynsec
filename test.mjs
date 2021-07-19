@@ -12,13 +12,20 @@ async function run() {
         process.exit(1);
     }
 
-    console.log(await dynsec.getDefaultACLAccess());
-    console.log(await dynsec.getAnonymousGroup());
+    // console.log(await dynsec.getDefaultACLAccess());
+    // console.log(await dynsec.getAnonymousGroup());
 
-    // dynsec.createClient({
-    //     username: "Jonas",
-    //     password: "test123"
-    // });
+    await dynsec.createClient({
+        username: "Jonas",
+        password: "test123"
+    });
+
+    await dynsec.setClientPassword({
+        username: "Jonas",
+        password: "test"
+    });
+
+    // await dynsec.deleteClient({ username: "Jonas" });
 
     dynsec.disconnect();
 }

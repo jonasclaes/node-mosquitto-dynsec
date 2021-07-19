@@ -8,7 +8,8 @@ import {
     IDefaultACLAccessResponse,
     IDeleteClientRequest,
     IPendingCommand,
-    IResponseTopicPayload
+    IResponseTopicPayload,
+    ISetClientPasswordRequest
 } from "./interfaces";
 
 enum SendCommand {
@@ -214,7 +215,41 @@ export class MosquittoDynSec {
         return await (this.sendCmd(SendCommand.deleteClient, deleteClientRequest) as Promise<void>);
     }
 
+    /**
+     * Change the password for a client.
+     * @param {ISetClientPasswordRequest} setClientPasswordRequest
+     * @returns {void}
+     */
+    public async setClientPassword(setClientPasswordRequest: ISetClientPasswordRequest): Promise<void> {
+        return await (this.sendCmd(SendCommand.setClientPassword, setClientPasswordRequest) as Promise<void>);
+    }
+
+    // TODO: setClientId
+    // TODO: addClientRole
+    // TODO: removeClientRole
+    // TODO: getClient
+    // TODO: listClients
+    // TODO: enableClient
+    // TODO: disableClient
+
     // Groups
 
+    // TODO: createGroup
+    // TODO: deleteGroup
+    // TODO: addGroupRole
+    // TODO: removeGroupRole
+    // TODO: addGroupClient
+    // TODO: removeGroupClient
+    // TODO: getGroup
+    // TODO: listGroups
+
     // Roles
+
+    // TODO: createRole
+    // TODO: deleteRole
+    // TODO: addRoleACL
+    // TODO: removeRoleACL
+    // TODO: getRole
+    // TODO: listRoles
+
 }
