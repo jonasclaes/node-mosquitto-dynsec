@@ -184,14 +184,12 @@ export class MosquittoDynSec {
      * @returns 
      */
     public async setAnonymousGroup(groupname: string) {
-        this.sendCmd(SendCommand.setAnonymousGroup, { groupname });
-        return;
+        return await (this.sendCmd(SendCommand.setAnonymousGroup, { groupname }) as Promise<void>);
     }
 
     // Clients
     public async createClient(createClientRequest: ICreateClientRequest) {
-        this.sendCmd(SendCommand.createClient, createClientRequest);
-        return;
+        return await (this.sendCmd(SendCommand.createClient, createClientRequest) as Promise<void>);
     }
 
     // Groups
