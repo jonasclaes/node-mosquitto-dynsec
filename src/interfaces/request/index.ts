@@ -14,3 +14,4 @@ export { IListGroupsRequest } from "./IListGroupsRequest";
 export { ICreateRoleRequest } from "./ICreateRoleRequest";
 export { IAddRoleACLRequest } from "./IAddRoleACLRequest";
 export { IRemoveRoleACLRequest } from "./IRemoveRoleACLRequest";
+export { IListRolesRequest } from "./IListRolesRequest";

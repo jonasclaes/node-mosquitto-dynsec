@@ -44,7 +44,7 @@ async function run() {
 
     // console.log(await dynsec.getClient("admin-user"));
 
-    // console.log(await dynsec.listClients());
+    // console.log(await dynsec.listClients({ verbose: true }));
 
     // await dynsec.enableClient("Jonas");
 
@@ -89,6 +89,10 @@ async function run() {
     //     acltype: EnumAclType.PUBLISH_CLIENT_SEND,
     //     topic: "test/v1"
     // });
+
+    // console.log(await dynsec.getRole("testrole"));
+
+    // console.log(await dynsec.listRoles({ verbose: true }));
     
     dynsec.disconnect();
 }

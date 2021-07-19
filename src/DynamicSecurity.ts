@@ -15,10 +15,13 @@ import {
     IDeleteClientRequest,
     IGetClientResponse,
     IGetGroupResponse,
+    IGetRoleResponse,
     IListClientsRequest,
     IListClientsResponse,
     IListGroupsRequest,
     IListGroupsResponse,
+    IListRolesRequest,
+    IListRolesResponse,
     IPendingCommand,
     IRemoveClientRoleRequest,
     IRemoveGroupClientRequest,
@@ -28,7 +31,7 @@ import {
     ISetClientIdRequest,
     ISetClientPasswordRequest
 } from "./interfaces";
-import { EnumMQTTCmd } from "./enums";
+import { EnumAclType, EnumMQTTCmd } from "./enums";
 
 export class MosquittoDynSec {
     // Constants.
@@ -409,11 +412,22 @@ export class MosquittoDynSec {
         return await (this.sendCmd(EnumMQTTCmd.REMOVE_ROLE_ACL, removeRoleACLRequest) as Promise<void>);
     }
     
+    /**
+     * Get a role.
+     * @param {string} rolename
+     * @returns {IGetRoleResponse}
+     */
+    public async getRole(rolename: string): Promise<IGetRoleResponse> {
+        return await (this.sendCmd(EnumMQTTCmd.GET_ROLE, { rolename }) as Promise<IGetRoleResponse>);
+    }
     
-    // TODO: getRole
-    
-    
-    // TODO: listRoles
-
+    /**
+     * List roles.
+     * @param {IListRolesRequest} listRolesRequest
+     * @returns {IListRolesResponse}
+     */
+    public async listRoles(listRolesRequest: IListRolesRequest): Promise<IListRolesResponse> {
+        return await (this.sendCmd(EnumMQTTCmd.LIST_ROLES, listRolesRequest) as Promise<IListRolesResponse>);
+    }
 
 }
