@@ -1,6 +1,8 @@
 <h1 align="center">Welcome to node-mosquitto-dynsec 👋</h1>
 <p>
-  <img alt="Version" src="https://img.shields.io/badge/version-0.0.1-blue.svg?cacheSeconds=2592000" />
+  <a href="https://www.npmjs.com/package/node-mosquitto-dynsec" target="_blank">
+    <img alt="Version" src="https://img.shields.io/npm/v/node-mosquitto-dynsec.svg">
+  </a>
   <a href="https://github.com/jonasclaes/node-mosquitto-dynsec#readme" target="_blank">
     <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
   </a>
@@ -22,7 +24,7 @@
 ## Install
 
 ```sh
-npm install
+npm install node-mosquitto-dynsec
 ```
 
 ## Run tests
@@ -52,6 +54,3 @@ Give a ⭐️ if this project helped you!
 
 Copyright © 2021 [Jonas Claes <jonas+packages@jonasclaes.be>](https://github.com/jonasclaes).<br />
 This project is [MIT](https://github.com/jonasclaes/node-mosquitto-dynsec/blob/master/LICENSE) licensed.
-
-***
-_This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
