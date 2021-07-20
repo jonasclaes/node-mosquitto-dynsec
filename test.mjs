@@ -1,3 +1,4 @@
+import { EnumAclType } from "./dist/enums/EnumAclType.js";
 import { MosquittoDynSec } from "./dist/index.js";
 
 async function run() {
@@ -5,8 +6,9 @@ async function run() {
     const dynsec = new MosquittoDynSec();
     try {
         await dynsec.connect({
-        password: "test"
-    });
+            host: "127.0.0.1",
+            password: "admin"
+        });
     } catch (e) {
         console.error("Could not connect to MQTT server.");
         process.exit(1);
@@ -42,7 +44,7 @@ async function run() {
 
     // console.log(await dynsec.getClient("admin-user"));
 
-    // console.log(await dynsec.listClients());
+    // console.log(await dynsec.listClients({ verbose: true }));
 
     // await dynsec.enableClient("Jonas");
 
@@ -56,10 +58,42 @@ async function run() {
 
     // console.log(await dynsec.getGroup("testgrp"));
 
-    console.log(await dynsec.listGroups({ verbose: true }));
+    // console.log(await dynsec.listGroups({ verbose: true }));
 
     // await dynsec.deleteClient({ username: "Jonas" });
 
+    // await dynsec.deleteRole("testrole");
+
+    // await dynsec.createRole({
+    //     rolename: "testrole",
+    //     acls: [{
+    //         acltype: EnumAclType.PUBLISH_CLIENT_SEND,
+    //         topic: "/",
+    //         allow: true
+    //     }, {
+    //         acltype: EnumAclType.PUBLISH_CLIENT_RECEIVE,
+    //         topic: "/",
+    //         allow: true
+    //     }]
+    // });
+
+    // await dynsec.addRoleACL({
+    //     rolename: "testrole",
+    //     acltype: EnumAclType.PUBLISH_CLIENT_SEND,
+    //     topic: "test/v1",
+    //     allow: true
+    // });
+
+    // await dynsec.removeRoleACL({
+    //     rolename: "testrole",
+    //     acltype: EnumAclType.PUBLISH_CLIENT_SEND,
+    //     topic: "test/v1"
+    // });
+
+    // console.log(await dynsec.getRole("testrole"));
+
+    // console.log(await dynsec.listRoles({ verbose: true }));
+    
     dynsec.disconnect();
 }
 

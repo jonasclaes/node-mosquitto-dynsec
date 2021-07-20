@@ -3,59 +3,35 @@ import {
     IAddClientRoleRequest,
     IAddGroupClientRequest,
     IAddGroupRoleRequest,
+    IAddRoleACLRequest,
     IAnonymousGroupResponse,
     ICommandPayload,
     ICommandResponse,
     ICreateClientRequest,
     ICreateGroupRequest,
+    ICreateRoleRequest,
     IDefaultACLAccess,
     IDefaultACLAccessResponse,
     IDeleteClientRequest,
     IGetClientResponse,
     IGetGroupResponse,
+    IGetRoleResponse,
     IListClientsRequest,
     IListClientsResponse,
     IListGroupsRequest,
     IListGroupsResponse,
+    IListRolesRequest,
+    IListRolesResponse,
     IPendingCommand,
     IRemoveClientRoleRequest,
     IRemoveGroupClientRequest,
     IRemoveGroupRoleRequest,
+    IRemoveRoleACLRequest,
     IResponseTopicPayload,
     ISetClientIdRequest,
     ISetClientPasswordRequest
 } from "./interfaces";
-
-enum SendCommand {
-    "getDefaultACLAccess" = "getDefaultACLAccess",
-    "setDefaultACLAccess" = "setDefaultACLAccess",
-    "getAnonymousGroup" = "getAnonymousGroup",
-    "setAnonymousGroup" = "setAnonymousGroup",
-    "createClient" = "createClient",
-    "deleteClient" = "deleteClient",
-    "setClientPassword" = "setClientPassword",
-    "setClientId" = "setClientId",
-    "addClientRole" = "addClientRole",
-    "removeClientRole" = "removeClientRole",
-    "getClient" = "getClient",
-    "listClients" = "listClients",
-    "enableClient" = "enableClient",
-    "disableClient" = "disableClient",
-    "createGroup" = "createGroup",
-    "deleteGroup" = "deleteGroup",
-    "addGroupRole" = "addGroupRole",
-    "removeGroupRole" = "removeGroupRole",
-    "addGroupClient" = "addGroupClient",
-    "removeGroupClient" = "removeGroupClient",
-    "getGroup" = "getGroup",
-    "listGroups" = "listGroups",
-    "createRole" = "createRole",
-    "deleteRole" = "deleteRole",
-    "addRoleACL" = "addRoleACL",
-    "removeRoleACL" = "removeRoleACL",
-    "getRole" = "getRole",
-    "listRoles" = "listRoles"
-}
+import { EnumMQTTCmd } from "./enums";
 
 export class MosquittoDynSec {
     // Constants.
@@ -197,7 +173,7 @@ export class MosquittoDynSec {
      * @returns {IDefaultACLAccessResponse}
      */
     public async getDefaultACLAccess(): Promise<IDefaultACLAccessResponse> {
-        return await (this.sendCmd(SendCommand.getDefaultACLAccess) as Promise<IDefaultACLAccessResponse>);
+        return await (this.sendCmd(EnumMQTTCmd.GET_DEFAULT_ACL_ACCESS) as Promise<IDefaultACLAccessResponse>);
     }
 
     /**
@@ -206,7 +182,7 @@ export class MosquittoDynSec {
      * @returns {void}
      */
     public async setDefaultACLAccess(acls: IDefaultACLAccess[]): Promise<void> {
-        return await (this.sendCmd(SendCommand.setDefaultACLAccess, { acls }) as Promise<void>);
+        return await (this.sendCmd(EnumMQTTCmd.SET_DEFAULT_ACL_ACCESS, { acls }) as Promise<void>);
     }
 
     /**
@@ -214,7 +190,7 @@ export class MosquittoDynSec {
      * @returns {IAnonymousGroupResponse}
      */
     public async getAnonymousGroup(): Promise<IAnonymousGroupResponse> {
-        return await (this.sendCmd(SendCommand.getAnonymousGroup) as Promise<IAnonymousGroupResponse>);
+        return await (this.sendCmd(EnumMQTTCmd.GET_ANONYMOUS_GROUP) as Promise<IAnonymousGroupResponse>);
     }
 
     /**
@@ -223,7 +199,7 @@ export class MosquittoDynSec {
      * @returns {void}
      */
     public async setAnonymousGroup(groupname: string): Promise<void> {
-        return await (this.sendCmd(SendCommand.setAnonymousGroup, { groupname }) as Promise<void>);
+        return await (this.sendCmd(EnumMQTTCmd.SET_ANONYMOUS_GROUP, { groupname }) as Promise<void>);
     }
 
     //
@@ -236,7 +212,7 @@ export class MosquittoDynSec {
      * @returns {void}
      */
     public async createClient(createClientRequest: ICreateClientRequest): Promise<void> {
-        return await (this.sendCmd(SendCommand.createClient, createClientRequest) as Promise<void>);
+        return await (this.sendCmd(EnumMQTTCmd.CREATE_CLIENT, createClientRequest) as Promise<void>);
     }
 
     /**
@@ -245,7 +221,7 @@ export class MosquittoDynSec {
      * @returns {void}
      */
     public async deleteClient(deleteClientRequest: IDeleteClientRequest): Promise<void> {
-        return await (this.sendCmd(SendCommand.deleteClient, deleteClientRequest) as Promise<void>);
+        return await (this.sendCmd(EnumMQTTCmd.DELETE_CLIENT, deleteClientRequest) as Promise<void>);
     }
 
     /**
@@ -254,7 +230,7 @@ export class MosquittoDynSec {
      * @returns {void}
      */
     public async setClientPassword(setClientPasswordRequest: ISetClientPasswordRequest): Promise<void> {
-        return await (this.sendCmd(SendCommand.setClientPassword, setClientPasswordRequest) as Promise<void>);
+        return await (this.sendCmd(EnumMQTTCmd.SET_CLIENT_PASSWORD, setClientPasswordRequest) as Promise<void>);
     }
 
     /**
@@ -263,7 +239,7 @@ export class MosquittoDynSec {
      * @returns {void}
      */
     public async setClientId(setClientIdRequest: ISetClientIdRequest): Promise<void> {
-        return await (this.sendCmd(SendCommand.setClientId, setClientIdRequest) as Promise<void>);
+        return await (this.sendCmd(EnumMQTTCmd.SET_CLIENT_ID, setClientIdRequest) as Promise<void>);
     }
 
     /**
@@ -272,7 +248,7 @@ export class MosquittoDynSec {
      * @returns {void}
      */
     public async addClientRole(addClientRoleRequest: IAddClientRoleRequest): Promise<void> {
-        return await (this.sendCmd(SendCommand.addClientRole, addClientRoleRequest) as Promise<void>);
+        return await (this.sendCmd(EnumMQTTCmd.ADD_CLIENT_ROLE, addClientRoleRequest) as Promise<void>);
     }
 
     /**
@@ -281,7 +257,7 @@ export class MosquittoDynSec {
      * @returns {void}
      */
     public async removeClientRole(removeClientRoleRequest: IRemoveClientRoleRequest): Promise<void> {
-        return await (this.sendCmd(SendCommand.removeClientRole, removeClientRoleRequest) as Promise<void>);
+        return await (this.sendCmd(EnumMQTTCmd.REMOVE_CLIENT_ROLE, removeClientRoleRequest) as Promise<void>);
     }
 
     /**
@@ -290,7 +266,7 @@ export class MosquittoDynSec {
      * @returns {IClientResponse}
      */
     public async getClient(username: string): Promise<IGetClientResponse> {
-        return await (this.sendCmd(SendCommand.getClient, { username }) as Promise<IGetClientResponse>);
+        return await (this.sendCmd(EnumMQTTCmd.GET_CLIENT, { username }) as Promise<IGetClientResponse>);
     }
 
     /**
@@ -299,7 +275,7 @@ export class MosquittoDynSec {
      * @returns {IListClientsResponse}
      */
     public async listClients(listClientsRequest: IListClientsRequest): Promise<IListClientsResponse> {
-        return await (this.sendCmd(SendCommand.listClients, listClientsRequest) as Promise<IListClientsResponse>);
+        return await (this.sendCmd(EnumMQTTCmd.LIST_CLIENTS, listClientsRequest) as Promise<IListClientsResponse>);
     }
 
     /**
@@ -308,7 +284,7 @@ export class MosquittoDynSec {
      * @returns {void}
      */
     public async enableClient(username: string): Promise<void> {
-        return await (this.sendCmd(SendCommand.enableClient, { username }) as Promise<void>);
+        return await (this.sendCmd(EnumMQTTCmd.ENABLE_CLIENT, { username }) as Promise<void>);
     }
 
     /**
@@ -317,7 +293,7 @@ export class MosquittoDynSec {
      * @returns {void}
      */
      public async disableClient(username: string): Promise<void> {
-        return await (this.sendCmd(SendCommand.disableClient, { username }) as Promise<void>);
+        return await (this.sendCmd(EnumMQTTCmd.DISABLE_CLIENT, { username }) as Promise<void>);
     }
 
     //
@@ -330,7 +306,7 @@ export class MosquittoDynSec {
      * @returns {void}
      */
     public async createGroup(createGroupRequest: ICreateGroupRequest): Promise<void> {
-        return await (this.sendCmd(SendCommand.createGroup, createGroupRequest) as Promise<void>);
+        return await (this.sendCmd(EnumMQTTCmd.CREATE_GROUP, createGroupRequest) as Promise<void>);
     }
 
     /**
@@ -339,7 +315,7 @@ export class MosquittoDynSec {
      * @returns {void}
      */
      public async deleteGroup(groupname: string): Promise<void> {
-        return await (this.sendCmd(SendCommand.deleteGroup, { groupname }) as Promise<void>);
+        return await (this.sendCmd(EnumMQTTCmd.DELETE_GROUP, { groupname }) as Promise<void>);
     }
 
     /**
@@ -348,7 +324,7 @@ export class MosquittoDynSec {
      * @returns {void}
      */
     public async addGroupRole(addGroupRoleRequest: IAddGroupRoleRequest): Promise<void> {
-        return await (this.sendCmd(SendCommand.addGroupRole, addGroupRoleRequest) as Promise<void>);
+        return await (this.sendCmd(EnumMQTTCmd.ADD_GROUP_ROLE, addGroupRoleRequest) as Promise<void>);
     }
 
     /**
@@ -357,7 +333,7 @@ export class MosquittoDynSec {
      * @returns {void}
      */
     public async removeGroupRole(removeGroupRoleRequest: IRemoveGroupRoleRequest): Promise<void> {
-        return await (this.sendCmd(SendCommand.removeGroupRole, removeGroupRoleRequest) as Promise<void>);
+        return await (this.sendCmd(EnumMQTTCmd.REMOVE_GROUP_ROLE, removeGroupRoleRequest) as Promise<void>);
     }
 
     /**
@@ -366,7 +342,7 @@ export class MosquittoDynSec {
      * @returns {void}
      */
     public async addGroupClient(addGroupClientRequest: IAddGroupClientRequest): Promise<void> {
-        return await (this.sendCmd(SendCommand.addGroupClient, addGroupClientRequest) as Promise<void>);
+        return await (this.sendCmd(EnumMQTTCmd.ADD_GROUP_CLIENT, addGroupClientRequest) as Promise<void>);
     }
 
     /**
@@ -375,7 +351,7 @@ export class MosquittoDynSec {
      * @returns {void}
      */
     public async removeGroupClient(removeGroupClientRequest: IRemoveGroupClientRequest): Promise<void> {
-        return await (this.sendCmd(SendCommand.removeGroupClient, removeGroupClientRequest) as Promise<void>);
+        return await (this.sendCmd(EnumMQTTCmd.REMOVE_GROUP_CLIENT, removeGroupClientRequest) as Promise<void>);
     }
 
     /**
@@ -384,7 +360,7 @@ export class MosquittoDynSec {
      * @returns {IGetGroupResponse}
      */
     public async getGroup(groupname: string): Promise<IGetGroupResponse> {
-        return await (this.sendCmd(SendCommand.getGroup, { groupname }) as Promise<IGetGroupResponse>);
+        return await (this.sendCmd(EnumMQTTCmd.GET_GROUP, { groupname }) as Promise<IGetGroupResponse>);
     }
 
     /**
@@ -393,29 +369,65 @@ export class MosquittoDynSec {
      * @returns {IListGroupsResponse}
      */
     public async listGroups(listGroupsRequest: IListGroupsRequest): Promise<IListGroupsResponse> {
-        return await (this.sendCmd(SendCommand.listGroups, listGroupsRequest) as Promise<IListGroupsResponse>);
+        return await (this.sendCmd(EnumMQTTCmd.LIST_GROUPS, listGroupsRequest) as Promise<IListGroupsResponse>);
     }
 
     //
     // Roles
     //
 
-    // TODO: createRole
+    /**
+     * Create a role.
+     * @param {ICreateRoleRequest} createRoleRequest
+     * @returns {void}
+     */
+    public async createRole(createRoleRequest: ICreateRoleRequest): Promise<void> {
+        return await (this.sendCmd(EnumMQTTCmd.CREATE_ROLE, createRoleRequest) as Promise<void>);
+    }
 
-
-    // TODO: deleteRole
+    /**
+     * Delete a role.
+     * @param {string} rolename
+     * @returns {void}
+     */
+    public async deleteRole(rolename: string): Promise<void> {
+        return await (this.sendCmd(EnumMQTTCmd.DELETE_ROLE, { rolename }) as Promise<void>);
+    }    
     
+    /**
+     * Add an ACL to a role.
+     * @param {IAddRoleACLRequest} addRoleACLRequest
+     * @returns {void}
+     */
+    public async addRoleACL(addRoleACLRequest: IAddRoleACLRequest): Promise<void> {
+        return await (this.sendCmd(EnumMQTTCmd.ADD_ROLE_ACL, addRoleACLRequest) as Promise<void>);
+    }
     
-    // TODO: addRoleACL
+    /**
+     * Remove an ACL from a role.
+     * @param {IRemoveRoleACLRequest} removeRoleACLRequest
+     * @returns {void}
+     */
+    public async removeRoleACL(removeRoleACLRequest: IRemoveRoleACLRequest): Promise<void> {
+        return await (this.sendCmd(EnumMQTTCmd.REMOVE_ROLE_ACL, removeRoleACLRequest) as Promise<void>);
+    }
     
+    /**
+     * Get a role.
+     * @param {string} rolename
+     * @returns {IGetRoleResponse}
+     */
+    public async getRole(rolename: string): Promise<IGetRoleResponse> {
+        return await (this.sendCmd(EnumMQTTCmd.GET_ROLE, { rolename }) as Promise<IGetRoleResponse>);
+    }
     
-    // TODO: removeRoleACL
-    
-    
-    // TODO: getRole
-    
-    
-    // TODO: listRoles
-
+    /**
+     * List roles.
+     * @param {IListRolesRequest} listRolesRequest
+     * @returns {IListRolesResponse}
+     */
+    public async listRoles(listRolesRequest: IListRolesRequest): Promise<IListRolesResponse> {
+        return await (this.sendCmd(EnumMQTTCmd.LIST_ROLES, listRolesRequest) as Promise<IListRolesResponse>);
+    }
 
 }
