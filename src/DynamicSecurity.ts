@@ -96,7 +96,7 @@ export class MosquittoDynSec {
         return new Promise<void>((resolve, reject) => {
             mqtt.on("error", () => { reject(); });
             mqtt.on("connect", () => {
-                console.debug("Connected to MQTT server.");
+                // console.debug("Connected to MQTT server.");
 
                 mqtt.subscribe(MosquittoDynSec.RESPONSE_TOPIC);
                 this.mqttClient = mqtt;
