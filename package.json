@@ -1,6 +1,6 @@
 {
   "name": "node-mosquitto-dynsec",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Node.JS Library for the Mosquitto Dynamic Security Plugin.",
   "main": "dist/index.js",
   "scripts": {
