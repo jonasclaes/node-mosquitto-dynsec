@@ -45,6 +45,7 @@ deploy-job:      # This job runs in the deploy stage.
   #   - triggers
   script:
     - echo "Deploying application..."
+    - yarn run build
     - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
     - npm publish
     - echo "Application successfully deployed."
