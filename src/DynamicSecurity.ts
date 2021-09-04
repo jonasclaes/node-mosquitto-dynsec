@@ -38,7 +38,7 @@ export class MosquittoDynSec {
     private static readonly API_VERSION = "v1";
     private static readonly MGMT_TOPIC = `$CONTROL/dynamic-security/${MosquittoDynSec.API_VERSION}`;
     private static readonly RESPONSE_TOPIC = `${MosquittoDynSec.MGMT_TOPIC}/response`;
-    private static readonly TIMEOUT_SECONDS = 3;
+    private static readonly TIMEOUT_SECONDS = 5;
 
     // Class instance variables.
     private mqttClient?: MqttClient;
@@ -123,7 +123,9 @@ export class MosquittoDynSec {
 
         const timeoutPromise = new Promise<object>((resolve, reject) => {
             this.timerQueue[commandName] = setTimeout(() => {
+                delete this.commandQueue[commandName];
                 delete this.timerQueue[commandName];
+
                 reject("COMMAND_TIMEOUT");
             }, 1000 * MosquittoDynSec.TIMEOUT_SECONDS);
         });
